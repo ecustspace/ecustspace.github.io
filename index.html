@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>无标题文档</title>
+<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="//recaptcha.net/recaptcha/api.js"></script>
+<script>
+function creatcard(){
+	var replycardhtml = `<div class="reply_card">
+<div class="reply-header">
+    <span class="user-name">用户名</span>
+  </div>
+  <div class="reply-content">
+    <p>第一个用户的回复内容</p>
+    <span class="reply-date">2023-03-21 09:00</span>
+  </div>
+	<hr> <!-- 加上横线 -->
+	</div>`
+	var replycard = document.createElement("div");
+	replycard.innerHTML=replycardhtml
+	document.getElementById("reply").appendChild(replycard);
+}
+
+
+	function onSubmit(token){
+	$(document).ready(function() {
+	var regex = /^[a-zA-Z0-9]{6,18}$/;	
+	var formData = new FormData(document.getElementById("myform"));
+	var email=formData.get("email");
+	var password=formData.get("password");// 获取表单数据
+	if(regex.test(email)&&regex.test(password)){
+	formData = $('#myform').serialize() + '&tape=2';
+    $.ajax({
+      url: 'renjiyanzheng.php',
+      type: 'POST',
+      data: formData,
+      success: function(response) {
+        $('#response').html(response); // 显示响应数据
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+    });
+	}
+	else{alert('email或password不符合格式');}
+	grecaptcha.reset()
+	})
+	}
+</script>
+</head>
+
+<body>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
+<div class="offcanvas-header">
+<div class="row">
+<div class="col-8"><h4 class="offcanvas-title" id="offcanvasLabel">#789548</h4></div>
+<div class="col-4">
+<button type="button" class="btn btn-light me-2" id="replybtn">回复</button>
+<button type="button" class="btn btn-light" id="refresh">刷新</button>
+<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+</div>
+</div>
+<hr>
+<div class="offcanvas-body" id="bodyddd">
+<div class="reply_body" id="reply">
+<div class="reply_card">
+<div class="reply-header">
+    <span class="user-name">用户名</span>
+  </div>
+  <div class="reply-content">
+    <p>第一个用户的回复内容</p>
+    <span class="reply-date">2023-03-21 09:00</span>
+  </div>
+	<hr> <!-- 加上横线 -->
+	</div>
+	
+ <div class="reply-header">
+    <span class="user-name">另一个用户</span>
+  </div>
+  <div class="reply-content">
+    <p>另一个用户的回复内容</p>
+    <span class="reply-date">2023-03-21 10:00</span>
+  </div>
+</div>
+  <div class="reply-footer">
+    <button type="button" class="btn btn-light" id="formore">加载更多</button>
+  </div>
+
+</div>
+</div>
+<div class="container bg-light vh-100">
+<nav class="navbar navbar-light bg-light">
+<div class="container-fluid">
+<a class="navbar-brand" href="#">Navbar</a>
+<button class="btn btn-outline-success me-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">登录</button>
+
+</div>
+</nav>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+<li class="nav-item" role="presentation">
+<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">主页</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">插眼</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">漂流瓶</button>
+</li>
+</ul>
+<div class="tab-content" id="myTabContent">
+<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+<!-- 主页内容   -->
+<nav class="navbar navbar-light bg-light">
+<div class="container-fluid justify-content-end">
+<button class="btn btn-outline-success me-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1">发帖</button>
+<button class="btn btn-outline-success" type="button">刷新</button>
+</div>
+</nav>
+	
+</div>
+<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">暂未开放</div>
+</div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">ECUSTSPACE</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form id="myform">
+<div class="modal-body">
+ 
+	<div class="mb-3">
+	<label for="exampleInputEmail1" class="form-label">Email address</label>
+	<div class="input-group mb-3">
+<input type="text" class="form-control" name="email" placeholder="你的学号" aria-label="Recipient's username" aria-describedby="basic-addon2">
+<span class="input-group-text" id="basic-addon2">@mail.ecust.edu.cn</span>
+</div>
+</div>
+<div class="mb-3">
+<label for="exampleInputPassword1" class="form-label">Password</label>
+<input type="password" class="form-control" id="exampleInputPassword1" name="password">
+</div>		
+
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit" id="denglu">登录
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<div id="response"></div>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+<script>
+	window.onload=function(){
+		document.getElementById("formore").onclick=function(){
+		for(var i=0;i<10;i++){creatcard()}
+		document.getElementById("refresh").onclick=function(){
+			document.getElementById("reply").innerHTML=``
+			for(var i=0;i<10;i++){creatcard()}
+			document.getElementById("bodyddd").scrollTop=0
+		}
+	}
+	}
+	</script>
+</body>
+</html>
