@@ -21,11 +21,8 @@
     },  
       success: function(response) {
 	var obj = JSON.parse(response);
-       if('alert' in obj){alert(obj.alert);
-			 console.log(obj.alert);}
-	  else {
-  console.log('响应数据中不包含 alert 属性');
-}
+       alert('test');
+	 
 	   if('sessionid' in obj){sessionid = obj.sessionid;}// 显示响应数据
       },
       error: function(xhr, status, error) {
