@@ -16,9 +16,7 @@
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
       data: formData,
-	  xhrFields: {
-                    withCredentials: true
-                },
+	  
       success: function(response) {
        if('alert' in response){alert(response.alert)}
 	   if('sessionid' in response){sessionid = response.sessionid}// 显示响应数据
@@ -39,9 +37,7 @@
       url: 'https://43.143.86.109/yanzhengma_in2.php',
       type: 'POST',
       data: formData,
-	  xhrFields: {
-                    withCredentials: true
-                },
+	  
       success: function(response) {
         if('alert' in response){alert(response.alert)} // 显示响应数据
       },
