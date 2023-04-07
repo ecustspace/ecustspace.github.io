@@ -21,8 +21,11 @@
     },  
       success: function(response) {
 	var obj = JSON.parse(response);
-       if('alert' in obj){alert(obj.alert)}
-	   if('sessionid' in obj){sessionid = obj.sessionid}// 显示响应数据
+       if('alert' in obj){alert(obj.alert)；}
+	  else {
+  console.log('响应数据中不包含 alert 属性');
+}
+	   if('sessionid' in obj){sessionid = obj.sessionid;}// 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
@@ -45,7 +48,7 @@
     },    
       success: function(response) {
 	var obj = JSON.parse(response);
-        if('alert' in obj){alert(obj.alert)} // 显示响应数据
+        if('alert' in obj){alert(obj.alert);} // 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
