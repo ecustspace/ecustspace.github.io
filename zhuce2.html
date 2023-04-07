@@ -18,8 +18,9 @@
       data: formData,
 	  
       success: function(response) {
-       if('alert' in response){alert(response.alert)}
-	   if('sessionid' in response){sessionid = response.sessionid}// 显示响应数据
+	var obj = JSON.parse(response);
+       if('alert' in obj){alert(obj.alert)}
+	   if('sessionid' in obj){sessionid = obj.sessionid}// 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
@@ -39,7 +40,8 @@
       data: formData,
 	  
       success: function(response) {
-        if('alert' in response){alert(response.alert)} // 显示响应数据
+	var obj = JSON.parse(response);
+        if('alert' in obj){alert(obj.alert)} // 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
