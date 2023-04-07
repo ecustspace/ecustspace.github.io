@@ -8,6 +8,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 	<script src="//recaptcha.net/recaptcha/api.js"></script>
 	<script>
+	var sessionid
 	function onSubmit(token){
 	$(document).ready(function() {
 	var formData = $('#myform').serialize() + '&tape=1'; // 获取表单数据
@@ -19,7 +20,8 @@
                     withCredentials: true
                 },
       success: function(response) {
-        $('#response').html(response); // 显示响应数据
+       if('alert' in response){alert(response.alert)}
+	   if('sessionid' in response){sessionid = response.sessionid}// 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
@@ -31,8 +33,8 @@
   
   $(document).ready(function() {
   $('#zhuce').click(function(event) {
-    event.preventDefault(); // 阻止按钮的默认提交行为
-    var formData = $('#myform').serialize(); // 获取表单数据
+    event.preventDefault();
+    var formData = $('#myform').serialize() + '&sessionid=${encodeURIComponent(sessionid)}'; // 获取表单数据
     $.ajax({
       url: 'https://43.143.86.109/yanzhengma_in2.php',
       type: 'POST',
@@ -41,7 +43,7 @@
                     withCredentials: true
                 },
       success: function(response) {
-        $('#response').html(response); // 显示响应数据
+        if('alert' in response){alert(response.alert)} // 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
