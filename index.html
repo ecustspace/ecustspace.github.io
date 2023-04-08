@@ -66,8 +66,8 @@ function onSubmit1(token){
 		var posttext = document.getElementById("posttext")
 		var length = posttext.value.length
 		if(length > 512 || length < 8){alert('长度必须小于512个字符且大于10个字符，一个汉字为3个字符')}
-		else{alert(id)
-		     alert(token)
+		else{
+		     
 			var formdate = $('#postcontent').serialize() + '&sessionid=' + id + '&token=' + mytoken + '&tape=3'
 	  $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
@@ -77,7 +77,7 @@ function onSubmit1(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 alert(response)
+	 
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
@@ -86,6 +86,7 @@ function onSubmit1(token){
         console.log(xhr);
 		  
       }
+		  grecaptcha.reset()
     });
 		}
 	})
