@@ -47,6 +47,7 @@
         withCredentials: true // 允许发送凭证信息
     },    
       success: function(response) {
+	response = response.replace(/^\ufeff/g, '');
 	var obj = JSON.parse(response);
         if('alert' in obj){alert(obj.alert);} // 显示响应数据
       },
