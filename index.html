@@ -9,7 +9,7 @@
 <script src="//recaptcha.net/recaptcha/api.js"></script>
 <script>
 var id
-var token
+var mytoken
 function creatcard(){
 	var replycardhtml = `<div class="reply_card">
 <div class="reply-header">
@@ -47,7 +47,7 @@ function creatcard(){
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
-		if('token' in data){token = data.token}
+		if('token' in data){mytoken = data.token}
 		if('id' in data){id = data.id}// 显示响应数据
       },
       error: function(xhr, status, error) {
@@ -68,7 +68,7 @@ function onSubmit1(token){
 		if(length > 512 || length < 8){alert('长度必须小于512个字符且大于10个字符，一个汉字为3个字符')}
 		else{alert(id)
 		     alert(token)
-			var formdate = $('#postcontent').serialize() + '&sessionid=' + id + '&token=' + token + '&tape=3'
+			var formdate = $('#postcontent').serialize() + '&sessionid=' + id + '&token=' + mytoken + '&tape=3'
 	  $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
