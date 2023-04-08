@@ -16,17 +16,19 @@
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
       data: formData,
+						dataType:json
       xhrFields: {
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	var obj = JSON.parse(response);
+	
        alert('test');
 	 
-	   if('sessionid' in obj){sessionid = obj.sessionid;}// 显示响应数据
+	   if('sessionid' in response){sessionid = response.sessionid;}// 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
+								alert('error')
 		
       }
     });})
