@@ -1,13 +1,15 @@
 <!doctype html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <meta charset="utf-8">
-<title>无标题文档</title>
+<title>ecustspace</title>
 <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script src="//recaptcha.net/recaptcha/api.js"></script>
 <script>
+var id
+var token
 function creatcard(){
 	var replycardhtml = `<div class="reply_card">
 <div class="reply-header">
@@ -37,8 +39,11 @@ function creatcard(){
       url: 'renjiyanzheng.php',
       type: 'POST',
       data: formData,
+	  dataType:'json',
       success: function(response) {
-        $('#response').html(response); // 显示响应数据
+        if('alert' in response){alert(response.alert)}
+		if('token' in response){token = response.token}
+		if('id' in response){id = response.id}// 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
@@ -50,20 +55,44 @@ function creatcard(){
 	grecaptcha.reset()
 	})
 	}
+
+function onSubmit1(token){
+	$(document).ready(function() {
+		var posttext = document.getElementById("posttext")
+		var length = posttext.value.length
+		if(length > 512 || length < 8){alert('长度必须小于512个字符且大于10个字符，一个汉字为3个字符')}
+		else{
+			var formdate = $('#postcontent').serialize() + '&sessionid=' + id + '&token=' + token + '&tape=3'
+	  $.ajax({
+      url: 'renjiyanzheng.php',
+      type: 'POST',
+      data: formdate,
+	  dataType:'json',
+      success: function(response) {
+        if('alert' in response){alert(response.alert)}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+    });
+		}
+	})
+}
 </script>
 </head>
 
 <body>
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
+<div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
 <div class="offcanvas-header">
-<div class="row">
-<div class="col-8"><h4 class="offcanvas-title" id="offcanvasLabel">#789548</h4></div>
-<div class="col-4">
-<button type="button" class="btn btn-light me-2" id="replybtn">回复</button>
-<button type="button" class="btn btn-light" id="refresh">刷新</button>
+
+<h4 class="offcanvas-title" id="offcanvasLabel">#789548</h4>
+
+<button type="button" class="btn btn-light end-0" id="replybtn">回复</button>
+<button type="button" class="btn btn-light" id="replyrefresh">刷新</button>
 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-</div>
-</div>
+
+
 </div>
 <hr>
 <div class="offcanvas-body" id="bodyddd">
@@ -118,7 +147,7 @@ function creatcard(){
 <nav class="navbar navbar-light bg-light">
 <div class="container-fluid justify-content-end">
 <button class="btn btn-outline-success me-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1">发帖</button>
-<button class="btn btn-outline-success" type="button">刷新</button>
+<button class="btn btn-outline-success" type="button" id="refresh">刷新</button>
 </div>
 </nav>
 	
@@ -137,10 +166,9 @@ function creatcard(){
 </div>
 <form id="myform">
 <div class="modal-body">
- 
-	<div class="mb-3">
-	<label for="exampleInputEmail1" class="form-label">Email address</label>
-	<div class="input-group mb-3">
+ <div class="mb-3">
+<label for="exampleInputEmail1" class="form-label">Email address</label>
+<div class="input-group mb-3">
 <input type="text" class="form-control" name="email" placeholder="你的学号" aria-label="Recipient's username" aria-describedby="basic-addon2">
 <span class="input-group-text" id="basic-addon2">@mail.ecust.edu.cn</span>
 </div>
@@ -155,10 +183,32 @@ function creatcard(){
   <button type="submit" class="btn btn-primary g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit" id="denglu">登录
 </button>
 </div>
+
 </form>
 </div>
 </div>
 </div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel1">说点什么</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<form id="postcontent">
+<textarea class="form-control" id="posttext" rows="4" name="posttext"></textarea>
+</form>
+</div>
+<div class="modal-footer">
+ <button type="submit" class="btn btn-primary g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit1" id="postapost">发布
+</button>
+</div>
+</div>
+</div>
+</div>
+
 <div id="response"></div>
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
 <script>
