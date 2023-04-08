@@ -42,11 +42,13 @@ function creatcard(){
       xhrFields: {
         withCredentials: true // 允许发送凭证信息
     },  
-	dataType:'json',
+	
       success: function(response) {
-        if('alert' in response){alert(response.alert)}
-		if('token' in response){token = response.token}
-		if('id' in response){id = response.id}// 显示响应数据
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data = JSON.parse(response);
+        if('alert' in data){alert(data.alert)}
+		if('token' in data){token = data.token}
+		if('id' in data){id = data.id}// 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
@@ -70,12 +72,13 @@ function onSubmit1(token){
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
       data: formdate,
-      dataType:'json',
       xhrFields: {
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-        if('alert' in response){alert(response.alert)}
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data = JSON.parse(response);
+        if('alert' in data){alert(data.alert)}
       },
       error: function(xhr, status, error) {
         console.log(xhr);
