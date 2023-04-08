@@ -27,8 +27,8 @@
   if('alert' in data){alert(data.alert)}
       },
       error: function(xhr, status, error) {
-        console.log(error);
-								alert(error)
+        console.log(error,xhr);
+								alert(xhr)
 		
       }
     });})
