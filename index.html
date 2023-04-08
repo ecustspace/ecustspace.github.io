@@ -39,7 +39,10 @@ function creatcard(){
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
       data: formData,
-	  dataType:'json',
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+	dataType:'json',
       success: function(response) {
         if('alert' in response){alert(response.alert)}
 		if('token' in response){token = response.token}
@@ -67,7 +70,10 @@ function onSubmit1(token){
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
       data: formdate,
-	  dataType:'json',
+      dataType:'json',
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
       success: function(response) {
         if('alert' in response){alert(response.alert)}
       },
