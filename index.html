@@ -36,7 +36,7 @@ function creatcard(){
 	if(regex.test(email)&&regex.test(password)){
 	formData = $('#myform').serialize() + '&tape=2';
     $.ajax({
-      url: 'renjiyanzheng.php',
+      url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
       data: formData,
 	  dataType:'json',
@@ -64,7 +64,7 @@ function onSubmit1(token){
 		else{
 			var formdate = $('#postcontent').serialize() + '&sessionid=' + id + '&token=' + token + '&tape=3'
 	  $.ajax({
-      url: 'renjiyanzheng.php',
+      url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
       data: formdate,
 	  dataType:'json',
