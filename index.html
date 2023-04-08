@@ -76,6 +76,7 @@ function onSubmit1(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
+	 alert(response)
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
