@@ -10,8 +10,6 @@
 <script>
 var id
 var mytoken
-var weijianid1 = grecaptcha.render("denglu")
-var weijianid2 = grecaptcha.render("postapost")
 function creatcard(){
 	var replycardhtml = `<div class="reply_card">
 <div class="reply-header">
@@ -59,7 +57,7 @@ function creatcard(){
     });
 	}
 	else{alert('email或password不符合格式');}
-	grecaptcha.reset(weijianid1)
+	grecaptcha.reset("denglu")
 	})
 	}
 
@@ -86,7 +84,7 @@ function onSubmit1(token){
 		  
     });
 	
-	grecaptcha.reset(weijianid2)	
+	grecaptcha.reset("postapost")	
 	})
 }
 </script>
