@@ -83,7 +83,8 @@ function onSubmit1(token){
       }
 		  
     });
-	grecaptcha.reset(postapost)	
+	var weijianid = grecaptcha.render("postapost")
+	grecaptcha.reset(weijianid)	
 	})
 }
 </script>
