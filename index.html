@@ -325,8 +325,6 @@ function onSubmit2(token){
 <div id="response"></div>
 
 	window.onload=function(){
-		var myOffcanvas = document.getElementById("offcanvas");
-var offcanvas = new bootstrap.Offcanvas(myOffcanvas);
 		document.getElementById("formore").onclick=function(){
 		for(var i=0;i<10;i++){creatcard()}}
 		document.getElementById("refresh").onclick=function(){
@@ -351,7 +349,7 @@ postCardsContainer.addEventListener('click', event => {
 function showReplies(postId) {
   // TODO: 根据帖子ID查询数据库或其他数据源，获取相应回复的数据
   currentreplyid = postId;
-  offcanvas.show();
+  $('#offcanvas').offcanvas('show');
   // 创建回复元素并添加到页面中
   refreshreply(currentreplyid)
   
