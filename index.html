@@ -10,14 +10,15 @@
 <script>
 var id
 var mytoken
-function creatcard(){
+var currentreplyid
+function creatcard(floor,content,time){
 	var replycardhtml = `<div class="reply_card">
 <div class="reply-header">
-    <span class="user-name">用户名</span>
+    <span class="floor">${floor}楼</span>
   </div>
   <div class="reply-content">
-    <p>第一个用户的回复内容</p>
-    <span class="reply-date">2023-03-21 09:00</span>
+    <p>${content}</p>
+    <span class="reply-date">${time}</span>
   </div>
 	<hr> <!-- 加上横线 -->
 	</div>`
@@ -140,12 +141,42 @@ function onSubmit2(token){
 		  
     });
 	grecaptcha.reset()
-}	
+}
+	function refreshreply(postid){
+		var data = '&currentreplyid' + postid
+			 $.ajax({
+      url: 'https://43.143.86.109/replyselect.php',
+      type: 'POST',
+      data: data,
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+      success: function(response) {
+	 
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data2 = JSON.parse(response);
+        if('alert' in data2){alert(data2.alert)}
+		if('replys' in data2){
+			var replys = data2.replys
+			document.getElementById("reply").innerHTML=``
+			$.each(replys, function(index, reply) {
+				creatcard(reply.reply_id,reply.content,reply.time)
+			})
+			document.getElementById("bodyddd").scrollTop=0
+		}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+		  
+    });
+	}
 </script>
 </head>
 
 <body>
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
+<div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
 <div class="offcanvas-header">
 
 <h4 class="offcanvas-title" id="offcanvasLabel">#789548</h4>
@@ -318,12 +349,11 @@ postCardsContainer.addEventListener('click', event => {
 // 显示回复的函数
 function showReplies(postId) {
   // TODO: 根据帖子ID查询数据库或其他数据源，获取相应回复的数据
-  
+  currentreplyid = postId
+  document.getElementById("offcanvas").offcanvas.show
   // 创建回复元素并添加到页面中
-  const postCard = document.querySelector(`[data-post-id="${postId}"]`);
-  const replyElement = document.createElement('div');
-  replyElement.innerHTML = '<p>这是该帖子的回复内容</p>';
-  postCard.appendChild(replyElement);
+  refreshreply(currentreplyid)
+  
 }
 
 	
