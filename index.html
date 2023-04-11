@@ -323,7 +323,7 @@ function onSubmit2(token){
 </div>
 
 <div id="response"></div>
-
+<script>
 	window.onload=function(){
 		document.getElementById("formore").onclick=function(){
 		for(var i=0;i<10;i++){creatcard()}}
@@ -333,33 +333,29 @@ function onSubmit2(token){
 			document.getElementById("bodyddd").scrollTop=0
 		}
 	}
-	//监听点击卡片事件
+	
 	const postCardsContainer = document.getElementById("post-cards-container");
 
-// 为整个帖子容器添加单击事件监听器，使用事件委托
+
 postCardsContainer.addEventListener('click', event => {
-  const postCard = event.target.closest('.post-card'); // 找到最近的帖子卡片元素
+  const postCard = event.target.closest('.post-card'); 
   if (!postCard) return; // 如果没有找到，则退出
   
-  const postId = postCard.dataset.postId; // 获取帖子ID
-  showReplies(postId); // 调用显示回复的函数，传递帖子ID作为参数
+  const postId = postCard.dataset.postId; 
+  showReplies(postId); 
 });
 
-// 显示回复的函数
+
 function showReplies(postId) {
-  // TODO: 根据帖子ID查询数据库或其他数据源，获取相应回复的数据
+  
   currentreplyid = postId;
   $('#offcanvas').offcanvas('show');
-  // 创建回复元素并添加到页面中
+  
   refreshreply(currentreplyid)
   
 }
-
-	
-	
-	
-	</script>
+</script>
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
-<script>
+
 </body>
 </html>
