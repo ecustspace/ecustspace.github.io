@@ -129,7 +129,7 @@ function onSubmit2(token){
 			var posts = data2.posts
 			document.getElementById("post-cards-container").innerHTML=``
 			$.each(posts, function(index, post) {
-				creatpostcard(post.post_id,post.content,post.reply,post.time)
+				creatpostcard(post.post_id,post.content,post.reply,post.post_time)
 			})
 		}
       },
@@ -145,7 +145,7 @@ function onSubmit2(token){
 </head>
 
 <body>
-<div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
 <div class="offcanvas-header">
 
 <h4 class="offcanvas-title" id="offcanvasLabel">#789548</h4>
