@@ -26,6 +26,29 @@ function creatcard(){
 	document.getElementById("reply").appendChild(replycard);
 }
 
+function creatpostcard(postid,content,reply,time){
+	var postcardhtml = `<div class="post-card" data-post-id="${postid}">
+<div class="col-sm-12 col-md-12">
+<div class="card w-100 rounded-0">
+<div class="card-body">
+<table width="75%">
+  <tbody>
+    <tr>
+      <td width="40%" nowrap>&nbsp;#${postid}</td>
+      <td nowrap><img src="svg/72-icons-eleken/SVG/clock1.svg" alt="" width="20" height="20"/>&nbsp;${time}</td>
+    </tr>
+  </tbody>
+</table>
+<h5 class="card-text">${content}</h5>
+<img src="svg/72-icons-eleken/SVG/message.svg" alt="" width="20" height="20"/>&nbsp;(${reply})
+</div>
+</div>
+</div>
+</div>`
+	var postcard = document.createElement("div");
+	postcard.innerHTML=postcardhtml
+	document.getElementById("post-cards-container").appendChild(postcard);
+}
 
 	function onSubmit(token){
 	$(document).ready(function() {
@@ -57,7 +80,7 @@ function creatcard(){
     });
 	}
 	else{alert('email或password不符合格式');}
-	grecaptcha.reset()
+	grecaptcha.reset(1)
 	})
 	}
 
@@ -84,9 +107,40 @@ function onSubmit1(token){
 		  
     });
 	
-	grecaptcha.reset(1)	
+	grecaptcha.reset(2)	
 	})
 }
+	
+function onSubmit2(token){
+	var data1 = '&g-recaptcha-response=' + token + '&token=' + mytoken + '&sessionid=' + id + '&tape=4'
+	 $.ajax({
+      url: 'https://43.143.86.109/renjiyanzheng2.php',
+      type: 'POST',
+      data: data1,
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+      success: function(response) {
+	 
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data2 = JSON.parse(response);
+        if('alert' in data2){alert(data2.alert)}
+		if('posts' in data2){
+			var posts = data2.posts
+			document.getElementById("post-cards-container").innerHTML=``
+			$.each(posts, function(index, post) {
+				creatpostcard(post.post_id,post.content,post.reply,post.time)
+			})
+		}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+		  
+    });
+	grecaptcha.reset()
+}	
 </script>
 </head>
 
@@ -155,10 +209,29 @@ function onSubmit1(token){
 <nav class="navbar navbar-light bg-light">
 <div class="container-fluid justify-content-end">
 <button class="btn btn-outline-success me-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1">发帖</button>
-<button class="btn btn-outline-success" type="button" id="refresh">刷新</button>
+<button class="btn btn-outline-success g-recaptcha" type="button" id="refresh" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit2">刷新</button>
 </div>
 </nav>
-	
+<div class="container" id="post-cards-container">
+<div class="post-card" data-post-id="156">
+<div class="col-sm-12 col-md-12">
+<div class="card w-100 rounded-0">
+<div class="card-body">
+<table width="75%">
+  <tbody>
+    <tr>
+      <td width="40%" nowrap>&nbsp;#457</td>
+      <td nowrap><img src="svg/72-icons-eleken/SVG/clock1.svg" alt="" width="20" height="20"/>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<h5 class="card-text">With supporting text below as a natural lead-in to additional content.</h5>
+<img src="svg/72-icons-eleken/SVG/message.svg" alt="" width="20" height="20"/>&nbsp;(455)
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">暂未开放</div>
@@ -223,14 +296,39 @@ function onSubmit1(token){
 <script>
 	window.onload=function(){
 		document.getElementById("formore").onclick=function(){
-		for(var i=0;i<10;i++){creatcard()}
+		for(var i=0;i<10;i++){creatcard()}}
 		document.getElementById("refresh").onclick=function(){
 			document.getElementById("reply").innerHTML=``
 			for(var i=0;i<10;i++){creatcard()}
 			document.getElementById("bodyddd").scrollTop=0
 		}
 	}
-	}
+	//监听点击卡片事件
+	const postCardsContainer = document.getElementById("post-cards-container");
+
+// 为整个帖子容器添加单击事件监听器，使用事件委托
+postCardsContainer.addEventListener('click', event => {
+  const postCard = event.target.closest('.post-card'); // 找到最近的帖子卡片元素
+  if (!postCard) return; // 如果没有找到，则退出
+  
+  const postId = postCard.dataset.postId; // 获取帖子ID
+  showReplies(postId); // 调用显示回复的函数，传递帖子ID作为参数
+});
+
+// 显示回复的函数
+function showReplies(postId) {
+  // TODO: 根据帖子ID查询数据库或其他数据源，获取相应回复的数据
+  
+  // 创建回复元素并添加到页面中
+  const postCard = document.querySelector(`[data-post-id="${postId}"]`);
+  const replyElement = document.createElement('div');
+  replyElement.innerHTML = '<p>这是该帖子的回复内容</p>';
+  postCard.appendChild(replyElement);
+}
+
+	
+	
+	
 	</script>
 </body>
 </html>
