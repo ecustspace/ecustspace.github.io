@@ -142,8 +142,8 @@ function onSubmit2(token){
     });
 	grecaptcha.reset()
 }
-	function refreshreply(postid){
-		var data = '&currentreplyid' + postid
+	function refreshreply(){
+		var data = '&currentreplyid' + currentreplyid
 			 $.ajax({
       url: 'https://43.143.86.109/replyselect.php',
       type: 'POST',
@@ -351,7 +351,7 @@ function showReplies(postId) {
   currentreplyid = postId;
   $('#offcanvas').offcanvas('show');
   
-  refreshreply(currentreplyid)
+  refreshreply()
   
 }
 </script>
