@@ -25,7 +25,7 @@ function creatcard(floor,content,time){
     <span class="floor">${floor}楼</span>
   </div>
   <div class="reply-content">
-    <p>${content}</p>
+    <p class="card-text text-break">${content}</p>
     <span class="reply-date">${time}</span>
   </div>
 	<hr> <!-- 加上横线 -->
@@ -180,6 +180,34 @@ function onSubmit2(token){
 		  
     });
 	}
+	
+function onSubmit3(token){
+	$(document).ready(function() {
+	var formdate = $('#replycontent').serialize() + '&sessionid=' + id + '&token=' + mytoken + '&tape=5' + '&currentreplyid=' + currentreplyid 
+	  $.ajax({
+      url: 'https://43.143.86.109/renjiyanzheng2.php',
+      type: 'POST',
+      data: formdate,
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+      success: function(response) {
+	 
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data = JSON.parse(response);
+        if('alert' in data){alert(data.alert)}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+		  
+    });
+	
+	grecaptcha.reset(3)	
+	})
+}
+
 </script>
 </head>
 
@@ -189,7 +217,7 @@ function onSubmit2(token){
 
 <h4 class="offcanvas-title" id="offcanvasLabel">#789548</h4>
 
-<button type="button" class="btn btn-light end-0" id="replybtn">回复</button>
+<button class="btn btn-light end-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="replybtn">回复</button>
 <button type="button" class="btn btn-light" id="replyrefresh">刷新</button>
 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
@@ -197,13 +225,15 @@ function onSubmit2(token){
 </div>
 <hr>
 <div class="offcanvas-body" id="bodyddd">
+<h5 class="card-text text-break" id="postneirong"></h5>
+<hr>
 <div class="reply_body" id="reply">
 <div class="reply_card">
 <div class="reply-header">
     <span class="user-name">用户名</span>
   </div>
   <div class="reply-content">
-    <p>第一个用户的回复内容</p>
+    <p class="card-text text-break">第一个用户的回复内容</p>
     <span class="reply-date">2023-03-21 09:00</span>
   </div>
 	<hr> <!-- 加上横线 -->
@@ -213,7 +243,7 @@ function onSubmit2(token){
     <span class="user-name">另一个用户</span>
   </div>
   <div class="reply-content">
-    <p>另一个用户的回复内容</p>
+    <p class="card-text text-break">另一个用户的回复内容</p>
     <span class="reply-date">2023-03-21 10:00</span>
   </div>
 </div>
@@ -330,6 +360,27 @@ function onSubmit2(token){
 </div>
 </div>
 
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel2">reply</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form id="replycontent">
+<div class="modal-body">
+<textarea class="form-control" id="replytext" rows="4" name="posttext"></textarea>
+
+</div>
+<div class="modal-footer">
+ <button type="submit" class="btn btn-primary g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit3" id="postareply">发布
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>	
+	
 <div id="response"></div>
 <script>
 	window.onload=function(){
@@ -343,13 +394,14 @@ function onSubmit2(token){
 	}
 	
 	const postCardsContainer = document.getElementById("post-cards-container");
-
+    const replyCardsContainer = document.getElementById("reply");
 
 postCardsContainer.addEventListener('click', event => {
   const postCard = event.target.closest('.post-card'); 
   if (!postCard) return; // 如果没有找到，则退出
-  
-  const postId = postCard.dataset.postId; 
+  const postId = postCard.dataset.postId;
+  const cardText = postCard.querySelector('.card-text').textContent;
+  document.getElementById("postneirong").innerHTML=cardText
   showReplies(postId); 
 });
 
@@ -359,9 +411,19 @@ function showReplies(postId) {
   currentreplyid = postId;
   $('#offcanvas').offcanvas('show');
   
-  refreshreply()
-  
+  refreshreply()  
 }
+	
+replyCardsContainer.addEventListener('click', event => {
+  const replyCard = event.target.closest('.card-text'); 
+  if (!replyCard) return; // 如果没有找到，则退出
+  if (replyCard.style.webkitLineClamp === '5') {
+    replyCard.style.webkitLineClamp = 'none';
+  } else {
+    replyCard.style.webkitLineClamp = '5';
+  }
+});	
+	
 </script>
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
 
