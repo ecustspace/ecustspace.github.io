@@ -24,11 +24,11 @@ var nowreplyid
 function creatcard(floor,content,time){
 	var replycardhtml = `<div class="reply_card">
 <div class="reply-header">
-    <span class="floor">${floor}楼</span>
+    <p class="floor">${floor}楼</p>
   </div>
   <div class="reply-content">
-    <p class="card-text text-break">${content}</p>
-    <span class="reply-date">${time}</span>
+    <p class="card-text text-break fs-5">${content}</p>
+    <p class="reply-date text-muted">${time}</p>
   </div>
 	<hr> <!-- 加上横线 -->
 	</div>`
@@ -50,7 +50,7 @@ function creatpostcard(postid,content,reply,time){
     </tr>
   </tbody>
 </table>
-<h5 class="card-text text-break">${content}</h5>
+<p class="card-text text-break fs-5">${content}</p>
 <img src="svg/72-icons-eleken/SVG/message.svg" alt="" width="20" height="20"/>&nbsp;(${reply})
 </div>
 </div>
@@ -460,7 +460,7 @@ function onSubmit3(token){
 	}
 	
 	const postCardsContainer = document.getElementById("post-cards-container");
-    const replyCardsContainer = document.getElementById("reply");
+    const replyCardsContainer = document.getElementById("bodyddd");
 
 postCardsContainer.addEventListener('click', event => {
   const postCard = event.target.closest('.post-card'); 
