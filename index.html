@@ -21,6 +21,7 @@ var mytoken
 var currentreplyid
 var nowpostid
 var nowreplyid
+var nowfollowtime
 function creatcard(floor,content,time){
 	var replycardhtml = `<div class="reply_card">
 <div class="reply-header">
@@ -36,6 +37,22 @@ function creatcard(floor,content,time){
 	replycard.innerHTML=replycardhtml
 	document.getElementById("reply").appendChild(replycard);
 }
+	
+function creatcard1(floor,content,time){
+	var replycardhtml = `<div class="reply_card">
+<div class="reply-header">
+    <p class="floor">${floor}楼</p>
+  </div>
+  <div class="reply-content">
+    <p class="text text-break fs-5">${content}</p>
+    <p class="reply-date text-muted">${time}</p>
+  </div>
+	<hr> <!-- 加上横线 -->
+	</div>`
+	var replycard = document.createElement("div");
+	replycard.innerHTML=replycardhtml
+	document.getElementById("reply1").appendChild(replycard);
+}
 
 function creatpostcard(postid,content,reply,time){
 	var postcardhtml = `<div class="post-card" data-post-id="${postid}">
@@ -45,7 +62,7 @@ function creatpostcard(postid,content,reply,time){
   <tbody>
     <tr>
       <td width="40%" nowrap>&nbsp;#${postid}</td>
-      <td nowrap><img src="svg/72-icons-eleken/SVG/clock1.svg" alt="" width="20" height="20"/>&nbsp;${time}</td>
+      <td nowrap class="text-muted">&nbsp;${time}</td>
     </tr>
   </tbody>
 </table>
@@ -57,6 +74,28 @@ function creatpostcard(postid,content,reply,time){
 	var postcard = document.createElement("div");
 	postcard.innerHTML=postcardhtml
 	document.getElementById("post-cards-container").appendChild(postcard);
+}
+
+function creatpostcard1(postid,content,reply,time,replytime){
+	var postcardhtml = `<div class="post-card" data-post-id="${postid}">
+<div class="card w-100 rounded-0">
+<div class="card-body">
+<table width="75%">
+  <tbody>
+    <tr>
+      <td width="40%" nowrap>&nbsp;#${postid}</td>
+      <td nowrap class="text-muted">&nbsp;${time}</td>
+    </tr>
+  </tbody>
+</table>
+<p class="text text-break fs-5">${content}</p>
+<div class="text-muted">${reply}条评论&nbsp; &nbsp; &nbsp;最近评论时间：${replytime}</div>
+</div>
+</div>
+</div>`
+	var postcard = document.createElement("div");
+	postcard.innerHTML=postcardhtml
+	document.getElementById("post-cards-container1").appendChild(postcard);
 }
 
 	function onSubmit(token){
@@ -149,7 +188,7 @@ function onSubmit2(token){
       }
 		  
     });
-	grecaptcha.reset()
+	grecaptcha.reset(0)
 }
 	function refreshreply(){
 		var data = '&currentreplyid=' + currentreplyid
@@ -270,6 +309,182 @@ function onSubmit3(token){
 		  
     });
 	}
+	function followpost(){
+		$(document).ready(function() {
+	var formdate = '&sessionid=' + id + '&token=' + mytoken + '&tape=5' + '&currentreplyid=' + currentreplyid 
+	  $.ajax({
+      url: 'https://43.143.86.109/followpost.php',
+      type: 'POST',
+      data: formdate,
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+      success: function(response) {
+	 
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data = JSON.parse(response);
+        if('alert' in data){alert(data.alert)}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+		  
+    });	
+	})
+	}
+	
+function onSubmit5(token){
+	var data1 = '&g-recaptcha-response=' + token + '&token=' + mytoken + '&sessionid=' + id + '&tape=7'
+	 $.ajax({
+      url: 'https://43.143.86.109/renjiyanzheng2.php',
+      type: 'POST',
+      data: data1,
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+      success: function(response) {
+	 
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data2 = JSON.parse(response);
+        if('alert' in data2){alert(data2.alert)}
+		if('posts' in data2){
+			var posts = data2.posts
+			document.getElementById("post-cards-container1").innerHTML=``
+			$.each(posts, function(index, post) {
+				creatpostcard1(post.post_id,post.content,post.reply,post.post_time,post.last_reply_time)
+				
+			})	
+		}
+		 if('nowfollowtime' in data2){nowfollowtime = data2.nowfollowtime}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+		  
+    });
+	grecaptcha.reset()
+}
+	
+function onSubmit6(token){
+	var data1 = '&g-recaptcha-response=' + token + '&token=' + mytoken + '&sessionid=' + id + '&tape=8' + '&nowfollowtime=' + nowfollowtime
+	 $.ajax({
+      url: 'https://43.143.86.109/renjiyanzheng2.php',
+      type: 'POST',
+      data: data1,
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+      success: function(response) {
+	 
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data2 = JSON.parse(response);
+        if('alert' in data2){alert(data2.alert)}
+		if('posts' in data2){
+			var posts = data2.posts
+			$.each(posts, function(index, post) {
+				creatpostcard1(post.post_id,post.content,post.reply,post.post_time,post.last_reply_time)
+			})
+		}
+		if('nowfollowtime' in data2){nowfollowtime = data2.nowfollowtime}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+		  
+    });
+	grecaptcha.reset()
+}
+
+function refreshreply1(){
+	var data = '&currentreplyid=' + currentreplyid
+			 $.ajax({
+      url: 'https://43.143.86.109/followreplyselect.php',
+      type: 'POST',
+      data: data,
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+      success: function(response) {
+	 
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data2 = JSON.parse(response);
+        if('alert' in data2){alert(data2.alert)}
+		if('replys' in data2){
+			var replys = data2.replys
+			document.getElementById("reply1").innerHTML=``
+			$.each(replys, function(index, reply) {
+				creatcard1(reply.reply_id,reply.content,reply.time)
+				nowreplyid1 = reply.reply_id
+			})
+			document.getElementById("bodyddd1").scrollTop=0
+		}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+		  
+    });
+}
+	
+function replyformore1(){
+	var data = '&nowreplyid=' + nowreplyid1 + '&currentreplyid=' + currentreplyid
+			 $.ajax({
+      url: 'https://43.143.86.109/replyformore1.php',
+      type: 'POST',
+      data: data,
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+      success: function(response) {
+	 
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data2 = JSON.parse(response);
+        if('alert' in data2){alert(data2.alert)}
+		if('replys' in data2){
+			var replys = data2.replys
+			$.each(replys, function(index, reply) {
+				creatcard1(reply.reply_id,reply.content,reply.time)
+				nowreplyid1 = reply.reply_id
+			})
+			
+		}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+		  
+    });
+}
+
+function followpostcancel(){
+	$(document).ready(function() {
+	var formdate = '&sessionid=' + id + '&token=' + mytoken + '&tape=5' + '&currentreplyid=' + currentreplyid 
+	  $.ajax({
+      url: 'https://43.143.86.109/followpostcancel.php',
+      type: 'POST',
+      data: formdate,
+      xhrFields: {
+        withCredentials: true // 允许发送凭证信息
+    },  
+      success: function(response) {
+	 
+	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
+  var data = JSON.parse(response);
+        if('alert' in data){alert(data.alert)}
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr);
+		  
+      }
+		  
+    });	
+	})
+}
 </script>
 </head>
 
@@ -278,7 +493,7 @@ function onSubmit3(token){
 <div class="offcanvas-header">
 
 <h4 class="offcanvas-title" id="offcanvasLabel">reply</h4>
-
+<button type="button" class="btn btn-light" id="followpost">关注</button>
 <button class="btn btn-light end-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="replybtn">回复</button>
 <button type="button" class="btn btn-light" id="replyrefresh">刷新</button>
 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -290,24 +505,7 @@ function onSubmit3(token){
 <h5 class="card-text text-break" id="postneirong"></h5>
 <hr>
 <div class="reply_body" id="reply">
-<div class="reply_card">
-<div class="reply-header">
-    <span class="user-name">用户名</span>
-  </div>
-  <div class="reply-content">
-    <p class="card-text text-break">第一个用户的回复内容</p>
-    <span class="reply-date">2023-03-21 09:00</span>
-  </div>
-	<hr> <!-- 加上横线 -->
-	</div>
-	
- <div class="reply-header">
-    <span class="user-name">另一个用户</span>
-  </div>
-  <div class="reply-content">
-    <p class="card-text text-break">另一个用户的回复内容</p>
-    <span class="reply-date">2023-03-21 10:00</span>
-  </div>
+<!-- 回复容器-->
 </div>
   <div class="reply-footer">
     <button type="button" class="btn btn-light" id="formore">加载更多</button>
@@ -315,6 +513,32 @@ function onSubmit3(token){
 
 </div>
 </div>
+	
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas1" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
+<div class="offcanvas-header">
+
+<h4 class="offcanvas-title" id="offcanvasLabel1">reply</h4>
+<button type="button" class="btn btn-light" id="followpostcancel">取消关注</button>
+<button class="btn btn-light end-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="replybtn1">回复</button>
+<button type="button" class="btn btn-light" id="replyrefresh1">刷新</button>
+<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+
+</div>
+<hr>
+<div class="offcanvas-body" id="bodyddd1">
+<h5 class="card-text text-break" id="postneirong1"></h5>
+<hr>
+<div class="reply_body" id="reply1">
+<!-- 回复容器-->
+</div>
+  <div class="reply-footer">
+    <button type="button" class="btn btn-light" id="formore1">加载更多</button>
+  </div>
+
+</div>
+</div>	
+	
 <div class="container bg-light vh-100">
 <nav class="navbar navbar-light bg-light">
 <div class="container-fluid">
@@ -344,6 +568,35 @@ function onSubmit3(token){
 </div>
 </nav>
 <div class="container" id="post-cards-container">
+<div class="post-card" data-post-id="${postid}">
+<div class="card w-100 rounded-0">
+<div class="card-body">
+<table width="75%">
+  <tbody>
+    <tr>
+      <td width="40%" nowrap>&nbsp;#${postid}</td>
+      <td nowrap class="text-muted">&nbsp;${time}</td>
+    </tr>
+  </tbody>
+</table>
+<p class="text text-break fs-5">${content}</p>
+<div class="text-muted">${reply}条评论&nbsp; &nbsp; &nbsp;最近评论时间：${replytime}</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container mt-1">
+<button class="btn btn-light bg-white g-recaptcha w-100" type="button" id="formorepost" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit4">加载更多</button>	
+	</div>
+</div>
+<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+<nav class="navbar navbar-light bg-light">
+<div class="container-fluid justify-content-end">
+<button class="btn btn-outline-success g-recaptcha me-2" type="button" id="refresh1" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit5">刷新</button>
+</div>
+</nav>
+	
+<div class="container" id="post-cards-container1">
 <div class="post-card" data-post-id="0">
 <div class="col-sm-12 col-md-12">
 <div class="card w-100 rounded-0">
@@ -364,10 +617,10 @@ function onSubmit3(token){
 </div>
 </div>
 <div class="container mt-1">
-<button class="btn btn-light bg-white g-recaptcha w-100" type="button" id="formorepost" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit4">加载更多</button>	
+<button class="btn btn-light bg-white g-recaptcha w-100" type="button" id="formorepost1" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit6">加载更多</button>	
 	</div>
+	
 </div>
-<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">暂未开放</div>
 </div>
 </div>
@@ -452,13 +705,24 @@ function onSubmit3(token){
 		document.getElementById("formore").onclick=function(){
 			replyformore()
 		}
+		document.getElementById("formore1").onclick=function(){
+			replyformore1()
+		}
 		document.getElementById("replyrefresh").onclick=function(){
 			refreshreply()
+		}
+		document.getElementById("followpost").onclick=function(){
+			followpost()
+		}
+		document.getElementById("followpostcancel").onclick=function(){
+			followpostcancel()
 		}
 	}
 	
 	const postCardsContainer = document.getElementById("post-cards-container");
+	const postCardsContainer1 = document.getElementById("post-cards-container1");
     const replyCardsContainer = document.getElementById("reply");
+	const replyCardsContainer1 = document.getElementById("reply1");
 
 postCardsContainer.addEventListener('click', event => {
   const postCard = event.target.closest('.post-card'); 
@@ -468,8 +732,29 @@ postCardsContainer.addEventListener('click', event => {
   document.getElementById("postneirong").innerHTML=cardText
   showReplies(postId); 
 });
+	
+postCardsContainer1.addEventListener('click', event => {
+  const postCard = event.target.closest('.post-card'); 
+  if (!postCard) return; // 如果没有找到，则退出
+  const postId = postCard.dataset.postId;
+  const cardText = postCard.querySelector('.text').innerHTML;
+  document.getElementById("postneirong1").innerHTML=cardText
+  showReplies1(postId); 
+});
 
 replyCardsContainer.addEventListener('click', event => {
+  const replyCard = event.target.closest('.text');
+  
+  if (!replyCard) return; // 如果没有找到，则退出
+  if (replyCard.style.webkitLineClamp == 60) {
+	  
+    replyCard.style.webkitLineClamp = 5;
+  } else {
+    replyCard.style.webkitLineClamp = 60;
+  }
+});	
+	
+replyCardsContainer1.addEventListener('click', event => {
   const replyCard = event.target.closest('.text');
   
   if (!replyCard) return; // 如果没有找到，则退出
@@ -487,6 +772,14 @@ function showReplies(postId) {
   $('#offcanvas').offcanvas('show');
   
   refreshreply()  
+}
+
+function showReplies1(postId) {
+  
+  currentreplyid = postId;
+  $('#offcanvas1').offcanvas('show');
+  
+  refreshreply1()  
 }	
 </script>
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
