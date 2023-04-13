@@ -8,12 +8,11 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script src="//recaptcha.net/recaptcha/api.js"></script>
 <style>
-  .card-text {
+  .text {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
     -webkit-line-clamp: 5;
-    text-overflow: ellipsis;
   }
 </style>
 <script>
@@ -28,7 +27,7 @@ function creatcard(floor,content,time){
     <p class="floor">${floor}楼</p>
   </div>
   <div class="reply-content">
-    <p class="card-text text-break fs-5">${content}</p>
+    <p class="text text-break fs-5">${content}</p>
     <p class="reply-date text-muted">${time}</p>
   </div>
 	<hr> <!-- 加上横线 -->
@@ -50,7 +49,7 @@ function creatpostcard(postid,content,reply,time){
     </tr>
   </tbody>
 </table>
-<p class="card-text text-break fs-5">${content}</p>
+<p class="text text-break fs-5">${content}</p>
 <img src="svg/72-icons-eleken/SVG/message.svg" alt="" width="20" height="20"/>&nbsp;(${reply})
 </div>
 </div>
@@ -465,13 +464,13 @@ postCardsContainer.addEventListener('click', event => {
   const postCard = event.target.closest('.post-card'); 
   if (!postCard) return; // 如果没有找到，则退出
   const postId = postCard.dataset.postId;
-  const cardText = postCard.querySelector('.card-text').textContent;
+  const cardText = postCard.querySelector('.text').textContent;
   document.getElementById("postneirong").innerHTML=cardText
   showReplies(postId); 
 });
 
 replyCardsContainer.addEventListener('click', event => {
-  const replyCard = event.target.closest('.card-text');
+  const replyCard = event.target.closest('.text');
   
   if (!replyCard) return; // 如果没有找到，则退出
   if (replyCard.style.webkitLineClamp == 5) {
