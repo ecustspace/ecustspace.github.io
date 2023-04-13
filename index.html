@@ -344,7 +344,7 @@ function onSubmit5(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 console.log(response)
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -377,7 +377,7 @@ function onSubmit6(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 console.log(response)
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -408,7 +408,7 @@ function refreshreply1(){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 console.log(response)
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -440,7 +440,7 @@ function replyformore1(){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 console.log(response)
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -472,7 +472,7 @@ function followpostcancel(){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 console.log(response)
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
