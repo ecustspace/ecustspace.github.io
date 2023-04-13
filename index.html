@@ -471,15 +471,6 @@ postCardsContainer.addEventListener('click', event => {
   showReplies(postId); 
 });
 
-
-function showReplies(postId) {
-  
-  currentreplyid = postId;
-  $('#offcanvas').offcanvas('show');
-  
-  refreshreply()  
-}
-	
 replyCardsContainer.addEventListener('click', event => {
   const replyCard = event.target.closest('.card-text');
   
@@ -491,7 +482,14 @@ replyCardsContainer.addEventListener('click', event => {
     replyCard.style.webkitLineClamp = 5;
   }
 });	
-	
+
+function showReplies(postId) {
+  
+  currentreplyid = postId;
+  $('#offcanvas').offcanvas('show');
+  
+  refreshreply()  
+}	
 </script>
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
 
