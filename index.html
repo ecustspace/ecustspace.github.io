@@ -39,8 +39,7 @@ function creatcard(floor,content,time){
 
 function creatpostcard(postid,content,reply,time){
 	var postcardhtml = `<div class="post-card" data-post-id="${postid}">
-<div class="col-sm-12 col-md-12">
-<div class="card w-100 rounded-0">
+<div class="w-100 rounded-0">
 <div class="card-body">
 <table width="75%">
   <tbody>
@@ -52,7 +51,6 @@ function creatpostcard(postid,content,reply,time){
 </table>
 <p class="card-text text-break fs-5">${content}</p>
 <img src="svg/72-icons-eleken/SVG/message.svg" alt="" width="20" height="20"/>&nbsp;(${reply})
-</div>
 </div>
 </div>
 </div>`
