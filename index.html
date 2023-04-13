@@ -50,7 +50,7 @@ function creatpostcard(postid,content,reply,time){
   </tbody>
 </table>
 <p class="text text-break fs-5">${content}</p>
-<img src="svg/72-icons-eleken/SVG/message.svg" alt="" width="20" height="20"/>&nbsp;(${reply})
+<div class="text-muted">${reply}条评论</div>
 </div>
 </div>
 </div>`
@@ -458,7 +458,7 @@ function onSubmit3(token){
 	}
 	
 	const postCardsContainer = document.getElementById("post-cards-container");
-    const replyCardsContainer = document.getElementById("bodyddd");
+    const replyCardsContainer = document.getElementById("reply");
 
 postCardsContainer.addEventListener('click', event => {
   const postCard = event.target.closest('.post-card'); 
@@ -473,11 +473,11 @@ replyCardsContainer.addEventListener('click', event => {
   const replyCard = event.target.closest('.text');
   
   if (!replyCard) return; // 如果没有找到，则退出
-  if (replyCard.style.webkitLineClamp == 5) {
+  if (replyCard.style.webkitLineClamp == 60) {
 	  
-    replyCard.style.webkitLineClamp = 60;
-  } else {
     replyCard.style.webkitLineClamp = 5;
+  } else {
+    replyCard.style.webkitLineClamp = 60;
   }
 });	
 
