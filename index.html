@@ -464,7 +464,7 @@ postCardsContainer.addEventListener('click', event => {
   const postCard = event.target.closest('.post-card'); 
   if (!postCard) return; // 如果没有找到，则退出
   const postId = postCard.dataset.postId;
-  const cardText = postCard.querySelector('.text').textContent;
+  const cardText = postCard.querySelector('.text').innerHTML;
   document.getElementById("postneirong").innerHTML=cardText
   showReplies(postId); 
 });
