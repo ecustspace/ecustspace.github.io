@@ -138,13 +138,14 @@ function creatpostcard1(postid,content,reply,time,replytime){
 			})
 		}
 			if('posts1' in data){
-			var posts = data.posts1
+			var posts1 = data.posts1
 			document.getElementById("post-cards-container1").innerHTML=``
-			$.each(posts, function(index, post) {
-				creatpostcard1(post.post_id,post.content,post.reply,post.post_time)
-				nowpostid = post.post_id
+			$.each(posts1, function(index, post) {
+				creatpostcard1(post.post_id,post.content,post.reply,post.post_time,post.last_reply_time)
+
 			})
 		}
+	      if('nowfollowtime' in data){nowfollowtime = data.nowfollowtime}
 		$('#exampleModal').modal('hide'); // 显示响应数据
       },
       error: function(xhr, status, error) {
