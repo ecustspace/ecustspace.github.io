@@ -121,6 +121,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
     },  
 	
       success: function(response) {
+	      
 		  toggleButton("denglu", true);
 		  document.getElementById("myform").reset();
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
@@ -140,7 +141,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
 			var posts = data2.posts1
 			document.getElementById("post-cards-container1").innerHTML=``
 			$.each(posts, function(index, post) {
-				creatpostcard(post.post_id,post.content,post.reply,post.post_time)
+				creatpostcard1(post.post_id,post.content,post.reply,post.post_time)
 				nowpostid = post.post_id
 			})
 		}
