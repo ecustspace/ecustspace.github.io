@@ -127,7 +127,24 @@ function creatpostcard1(postid,content,reply,time,replytime){
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
 		if('token' in data){mytoken = data.token}
-		if('id' in data){id = data.id}// 显示响应数据
+		if('id' in data){id = data.id}
+		if('posts' in data2){
+			var posts = data2.posts
+			document.getElementById("post-cards-container").innerHTML=``
+			$.each(posts, function(index, post) {
+				creatpostcard(post.post_id,post.content,post.reply,post.post_time)
+				nowpostid = post.post_id
+			})
+		}
+			if('posts1' in data2){
+			var posts = data2.posts1
+			document.getElementById("post-cards-container1").innerHTML=``
+			$.each(posts, function(index, post) {
+				creatpostcard(post.post_id,post.content,post.reply,post.post_time)
+				nowpostid = post.post_id
+			})
+		}
+		$('#exampleModal').modal('hide'); // 显示响应数据
       },
       error: function(xhr, status, error) {
         console.log(xhr);
@@ -157,6 +174,7 @@ function onSubmit1(token){
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
+		$('#exampleModal1').modal('hide');
       },
       error: function(xhr, status, error) {
         console.log(xhr);
@@ -251,6 +269,7 @@ function onSubmit3(token){
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
+		$('#exampleModal2').modal('hide');
       },
       error: function(xhr, status, error) {
         console.log(xhr);
@@ -367,8 +386,8 @@ function onSubmit5(token){
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
-		if('posts' in data2){
-			var posts = data2.posts
+		if('posts1' in data2){
+			var posts = data2.posts1
 			document.getElementById("post-cards-container1").innerHTML=``
 			$.each(posts, function(index, post) {
 				creatpostcard1(post.post_id,post.content,post.reply,post.post_time,post.last_reply_time)
@@ -401,8 +420,8 @@ function onSubmit6(token){
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
-		if('posts' in data2){
-			var posts = data2.posts
+		if('posts1' in data2){
+			var posts = data2.posts1
 			$.each(posts, function(index, post) {
 				creatpostcard1(post.post_id,post.content,post.reply,post.post_time,post.last_reply_time)
 			})
