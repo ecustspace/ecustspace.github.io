@@ -22,6 +22,11 @@ var currentreplyid
 var nowpostid
 var nowreplyid
 var nowfollowtime
+var nowreplyid1
+function toggleButton(buttonId, isEnabled) {
+  var button = document.getElementById(buttonId);
+  button.disabled = !isEnabled;
+}
 function creatcard(floor,content,time){
 	var replycardhtml = `<div class="reply_card">
 <div class="reply-header">
@@ -105,6 +110,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
 	var email=formData.get("email");
 	var password=formData.get("password");// 获取表单数据
 	if(regex.test(email)&&regex.test(password)){
+		toggleButton("denglu", false);
 	formData = $('#myform').serialize() + '&tape=2';
     $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
@@ -115,6 +121,8 @@ function creatpostcard1(postid,content,reply,time,replytime){
     },  
 	
       success: function(response) {
+		  toggleButton("denglu", true);
+		  document.getElementById("myform").reset();
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
@@ -123,17 +131,18 @@ function creatpostcard1(postid,content,reply,time,replytime){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		  toggleButton("denglu", true);
       }
     });
 	}
 	else{alert('email或password不符合格式');}
-	grecaptcha.reset(4)
+	grecaptcha.reset(6)
 	})
 	}
 
 function onSubmit1(token){
 	$(document).ready(function() {
+	toggleButton("postapost", false);
 	var formdate = $('#postcontent').serialize() + '&sessionid=' + id + '&token=' + mytoken + '&tape=3'
 	  $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
@@ -143,23 +152,25 @@ function onSubmit1(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	toggleButton("postapost", true);
+	 document.getElementById("postcontent").reset();
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		toggleButton("postapost", true);
       }
 		  
     });
 	
-	grecaptcha.reset(5)	
+	grecaptcha.reset(7)	
 	})
 }
 	
 function onSubmit2(token){
+	toggleButton("refresh", false);
 	var data1 = '&g-recaptcha-response=' + token + '&token=' + mytoken + '&sessionid=' + id + '&tape=4'
 	 $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
@@ -169,7 +180,7 @@ function onSubmit2(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 toggleButton("refresh", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -184,13 +195,14 @@ function onSubmit2(token){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		 toggleButton("refresh", true); 
       }
 		  
     });
-	grecaptcha.reset(0)
+	grecaptcha.reset(2)
 }
 	function refreshreply(){
+		toggleButton("?", false);
 		var data = '&currentreplyid=' + currentreplyid
 			 $.ajax({
       url: 'https://43.143.86.109/replyselect.php',
@@ -200,7 +212,7 @@ function onSubmit2(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 toggleButton("?", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -216,7 +228,7 @@ function onSubmit2(token){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		 toggleButton("?", true); 
       }
 		  
     });
@@ -224,6 +236,7 @@ function onSubmit2(token){
 	
 function onSubmit3(token){
 	$(document).ready(function() {
+	toggleButton("postareply", false);
 	var formdate = $('#replycontent').serialize() + '&sessionid=' + id + '&token=' + mytoken + '&tape=5' + '&currentreplyid=' + currentreplyid 
 	  $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
@@ -233,22 +246,24 @@ function onSubmit3(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+		toggleButton("postareply", true);
+	 document.getElementById("replycontent").reset();
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		 toggleButton("postareply", true); 
       }
 		  
     });
 	
-	grecaptcha.reset(6)	
+	grecaptcha.reset(8)	
 	})
 }
 	function onSubmit4(token){
+		toggleButton("formorepost", false);
 		var data1 = '&g-recaptcha-response=' + token + '&token=' + mytoken + '&sessionid=' + id + '&tape=6' + '&nowpostid=' + nowpostid
 	 $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
@@ -258,7 +273,7 @@ function onSubmit3(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 toggleButton("formorepost", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -272,14 +287,15 @@ function onSubmit3(token){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		 toggleButton("formorepost", true); 
       }
 		  
     });
-	grecaptcha.reset(1)
+	grecaptcha.reset(3)
 	}
 
 	function replyformore(){
+		toggleButton("formore", false);
 		var data = '&nowreplyid=' + nowreplyid + '&currentreplyid=' + currentreplyid
 			 $.ajax({
       url: 'https://43.143.86.109/replyformore.php',
@@ -289,7 +305,7 @@ function onSubmit3(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 toggleButton("formore", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -304,14 +320,15 @@ function onSubmit3(token){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		  toggleButton("formore", true);
       }
 		  
     });
 	}
-	function followpost(){
+	function followpost(token){
 		$(document).ready(function() {
-	var formdate = '&sessionid=' + id + '&token=' + mytoken + '&tape=5' + '&currentreplyid=' + currentreplyid 
+		toggleButton("followpost", false);
+	var formdate = '&sessionid=' + id + '&token=' + mytoken + '&tape=5' + '&currentreplyid=' + currentreplyid + '&g-recaptcha-response=' + token 
 	  $.ajax({
       url: 'https://43.143.86.109/followpost.php',
       type: 'POST',
@@ -320,21 +337,23 @@ function onSubmit3(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 
+	 toggleButton("followpost", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		 toggleButton("followpost", true); 
       }
 		  
-    });	
+    });
+	grecaptcha.reset()
 	})
 	}
 	
 function onSubmit5(token){
+	toggleButton("refresh1", false);
 	var data1 = '&g-recaptcha-response=' + token + '&token=' + mytoken + '&sessionid=' + id + '&tape=7'
 	 $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
@@ -344,7 +363,7 @@ function onSubmit5(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 console.log(response)
+	 toggleButton("refresh1", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -360,14 +379,15 @@ function onSubmit5(token){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		 toggleButton("refresh1", true); 
       }
 		  
     });
-	grecaptcha.reset(2)
+	grecaptcha.reset(4)
 }
 	
 function onSubmit6(token){
+	toggleButton("formorepost1", false);
 	var data1 = '&g-recaptcha-response=' + token + '&token=' + mytoken + '&sessionid=' + id + '&tape=8' + '&nowfollowtime=' + nowfollowtime
 	 $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
@@ -377,7 +397,7 @@ function onSubmit6(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 console.log(response)
+	 toggleButton("formorepost1", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -391,14 +411,15 @@ function onSubmit6(token){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		toggleButton("formorepost1", true);  
       }
 		  
     });
-	grecaptcha.reset(3)
+	grecaptcha.reset(5)
 }
 
 function refreshreply1(){
+	toggleButton("?", false);
 	var data = '&currentreplyid=' + currentreplyid
 			 $.ajax({
       url: 'https://43.143.86.109/followreplyselect.php',
@@ -408,7 +429,7 @@ function refreshreply1(){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 console.log(response)
+	 toggleButton("?", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -424,13 +445,14 @@ function refreshreply1(){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		  toggleButton("?", true);
       }
 		  
     });
 }
 	
 function replyformore1(){
+	toggleButton("formore1", false);
 	var data = '&nowreplyid=' + nowreplyid1 + '&currentreplyid=' + currentreplyid
 			 $.ajax({
       url: 'https://43.143.86.109/replyformore1.php',
@@ -440,7 +462,7 @@ function replyformore1(){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 console.log(response)
+	 toggleButton("formore1", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -455,15 +477,16 @@ function replyformore1(){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		 toggleButton("formore1", true); 
       }
 		  
     });
 }
 
-function followpostcancel(){
+function followpostcancel(token){
 	$(document).ready(function() {
-	var formdate = '&sessionid=' + id + '&token=' + mytoken + '&tape=5' + '&currentreplyid=' + currentreplyid 
+	toggleButton("followpostcancel", false);
+	var formdate = '&sessionid=' + id + '&token=' + mytoken + '&tape=5' + '&currentreplyid=' + currentreplyid +'&g-recaptcha-response=' + token 
 	  $.ajax({
       url: 'https://43.143.86.109/followpostcancel.php',
       type: 'POST',
@@ -472,17 +495,18 @@ function followpostcancel(){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 console.log(response)
+	 toggleButton("followpostcancel", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  
+		toggleButton("followpostcancel", true);  
       }
 		  
     });	
+	grecaptcha.reset(1)
 	})
 }
 </script>
@@ -493,7 +517,7 @@ function followpostcancel(){
 <div class="offcanvas-header">
 
 <h4 class="offcanvas-title" id="offcanvasLabel">reply</h4>
-<button type="button" class="btn btn-light" id="followpost">关注</button>
+<button type="button" class="btn btn-light g-recaptcha" id="followpost" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="followpost">关注</button>
 <button class="btn btn-light end-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="replybtn">回复</button>
 <button type="button" class="btn btn-light" id="replyrefresh">刷新</button>
 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -518,7 +542,7 @@ function followpostcancel(){
 <div class="offcanvas-header">
 
 <h4 class="offcanvas-title" id="offcanvasLabel1">reply</h4>
-<button type="button" class="btn btn-light" id="followpostcancel">取消关注</button>
+<button type="button" class="btn btn-light g-recaptcha" id="followpostcancel" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="followpostcancel">取消关注</button>
 <button class="btn btn-light end-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="replybtn1">回复</button>
 <button type="button" class="btn btn-light" id="replyrefresh1">刷新</button>
 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -542,7 +566,7 @@ function followpostcancel(){
 <div class="container bg-light vh-100">
 <nav class="navbar navbar-light bg-light">
 <div class="container-fluid">
-<a class="navbar-brand" href="#">Navbar</a>
+<a class="navbar-brand" href="#">Ecustspace</a>
 <button class="btn btn-outline-success me-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">登录</button>
 
 </div>
@@ -629,7 +653,7 @@ function followpostcancel(){
 <div class="modal-dialog">
 <div class="modal-content">
 <div class="modal-header">
-  <h5 class="modal-title" id="exampleModalLabel">ECUSTSPACE</h5>
+  <h5 class="modal-title" id="exampleModalLabel">Ecustspace</h5>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <form id="myform">
@@ -710,12 +734,6 @@ function followpostcancel(){
 		}
 		document.getElementById("replyrefresh").onclick=function(){
 			refreshreply()
-		}
-		document.getElementById("followpost").onclick=function(){
-			followpost()
-		}
-		document.getElementById("followpostcancel").onclick=function(){
-			followpostcancel()
 		}
 	}
 	
