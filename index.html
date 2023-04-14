@@ -121,7 +121,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
     },  
 	
       success: function(response) {
-	      
+	      console.log(response)
 		  toggleButton("denglu", true);
 		  document.getElementById("myform").reset();
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
