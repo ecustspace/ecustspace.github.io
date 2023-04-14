@@ -129,16 +129,16 @@ function creatpostcard1(postid,content,reply,time,replytime){
         if('alert' in data){alert(data.alert)}
 		if('token' in data){mytoken = data.token}
 		if('id' in data){id = data.id}
-		if('posts' in data2){
-			var posts = data2.posts
+		if('posts' in data){
+			var posts = data.posts
 			document.getElementById("post-cards-container").innerHTML=``
 			$.each(posts, function(index, post) {
 				creatpostcard(post.post_id,post.content,post.reply,post.post_time)
 				nowpostid = post.post_id
 			})
 		}
-			if('posts1' in data2){
-			var posts = data2.posts1
+			if('posts1' in data){
+			var posts = data.posts1
 			document.getElementById("post-cards-container1").innerHTML=``
 			$.each(posts, function(index, post) {
 				creatpostcard1(post.post_id,post.content,post.reply,post.post_time)
