@@ -202,7 +202,7 @@ function onSubmit2(token){
 	grecaptcha.reset(2)
 }
 	function refreshreply(){
-		toggleButton("?", false);
+		
 		var data = '&currentreplyid=' + currentreplyid
 			 $.ajax({
       url: 'https://43.143.86.109/replyselect.php',
@@ -212,7 +212,7 @@ function onSubmit2(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 toggleButton("?", true);
+	
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -228,7 +228,7 @@ function onSubmit2(token){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		 toggleButton("?", true); 
+		  
       }
 		  
     });
@@ -419,7 +419,7 @@ function onSubmit6(token){
 }
 
 function refreshreply1(){
-	toggleButton("?", false);
+	
 	var data = '&currentreplyid=' + currentreplyid
 			 $.ajax({
       url: 'https://43.143.86.109/followreplyselect.php',
@@ -429,7 +429,7 @@ function refreshreply1(){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	 toggleButton("?", true);
+	
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
@@ -445,7 +445,7 @@ function refreshreply1(){
       },
       error: function(xhr, status, error) {
         console.log(xhr);
-		  toggleButton("?", true);
+		  
       }
 		  
     });
