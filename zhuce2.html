@@ -11,7 +11,7 @@
 	var sessionid
 	function onSubmit(token){
 	$(document).ready(function() {
-	var formData = $('#myform').serialize() + '&tape=1'; // 获取表单数据
+	var formData = $('#myform').serialize() + '&tape=1' + '&g-recaptcha-response=' + token; // 获取表单数据
     $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
@@ -36,7 +36,7 @@
 	
   function onSubmit1(token){
   $(document).ready(function() {
-    var formData = $('#myform').serialize() + '&sessionid=' + sessionid; // 获取表单数据
+    var formData = $('#myform').serialize() + '&sessionid=' + sessionid + '&g-recaptcha-response=' + token; // 获取表单数据
     $.ajax({
       url: 'https://43.143.86.109/yanzhengma_in2.php',
       type: 'POST',
