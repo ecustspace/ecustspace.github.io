@@ -21,6 +21,7 @@
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
+   console.log(response)
    response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response); // 解析 JSON 字符串
   if('sessionid' in data){sessionid = data.sessionid;}
@@ -45,6 +46,7 @@
         withCredentials: true // 允许发送凭证信息
     },    
       success: function(response) {
+	     console.log(response)
 	response = response.replace(/^\ufeff/g, '');
 	var obj = JSON.parse(response);
         if('alert' in obj){alert(obj.alert);} // 显示响应数据
