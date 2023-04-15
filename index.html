@@ -112,6 +112,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
 	if(regex.test(email)&&regex.test(password)){
 		toggleButton("denglu", false);
 	formData = $('#myform').serialize() + '&tape=2';
+	document.getElementById("myform").reset();
     $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
@@ -123,7 +124,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
       success: function(response) {
 	      console.log(response)
 		  toggleButton("denglu", true);
-		  document.getElementById("myform").reset();
+		  
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
@@ -163,6 +164,7 @@ function onSubmit1(token){
 	$(document).ready(function() {
 	toggleButton("postapost", false);
 	var formdate = $('#postcontent').serialize() + '&sessionid=' + id + '&token=' + mytoken + '&tape=3'
+	document.getElementById("postcontent").reset();
 	  $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
@@ -172,7 +174,7 @@ function onSubmit1(token){
     },  
       success: function(response) {
 	toggleButton("postapost", true);
-	 document.getElementById("postcontent").reset();
+	 
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
@@ -258,6 +260,7 @@ function onSubmit3(token){
 	$(document).ready(function() {
 	toggleButton("postareply", false);
 	var formdate = $('#replycontent').serialize() + '&sessionid=' + id + '&token=' + mytoken + '&tape=5' + '&currentreplyid=' + currentreplyid 
+	document.getElementById("replycontent").reset();
 	  $.ajax({
       url: 'https://43.143.86.109/renjiyanzheng2.php',
       type: 'POST',
@@ -267,7 +270,7 @@ function onSubmit3(token){
     },  
       success: function(response) {
 		toggleButton("postareply", true);
-	 document.getElementById("replycontent").reset();
+	 
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
@@ -539,8 +542,8 @@ function followpostcancel(token){
 
 <h4 class="offcanvas-title" id="offcanvasLabel">reply</h4>
 <button type="button" class="btn btn-light g-recaptcha" id="followpost" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="followpost">关注</button>
-<button class="btn btn-light end-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="replybtn">回复</button>
-<button type="button" class="btn btn-light" id="replyrefresh">刷新</button>
+<button class="btn btn-outline-dark end-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="replybtn">回复</button>
+<button type="button" class="btn btn-outline-dark" id="replyrefresh">刷新</button>
 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
 
@@ -563,9 +566,9 @@ function followpostcancel(token){
 <div class="offcanvas-header">
 
 <h4 class="offcanvas-title" id="offcanvasLabel1">reply</h4>
-<button type="button" class="btn btn-light g-recaptcha" id="followpostcancel" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="followpostcancel">取消关注</button>
+<button type="button" class="btn btn-outline-dark g-recaptcha" id="followpostcancel" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="followpostcancel">取消关注</button>
 <button class="btn btn-light end-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="replybtn1">回复</button>
-<button type="button" class="btn btn-light" id="replyrefresh1">刷新</button>
+<button type="button" class="btn btn-outline-dark" id="replyrefresh1">刷新</button>
 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
 
@@ -588,47 +591,49 @@ function followpostcancel(token){
 <nav class="navbar navbar-light bg-light">
 <div class="container-fluid">
 <a class="navbar-brand" href="#">Ecustspace</a>
-<button class="btn btn-outline-success me-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">登录</button>
-
+<div class="btn-group" role="group" aria-label="Basic outlined example">
+<button class="btn btn-outline-dark me-0" type="button" onclick="window.location.href='/zhuce2.html'">注册</button>
+<button class="btn btn-outline-dark me-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">登录</button>
+</div>
 </div>
 </nav>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
 <li class="nav-item" role="presentation">
-<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">主页</button>
+<button class="nav-link active text-dark" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">主页</button>
 </li>
 <li class="nav-item" role="presentation">
-<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">关注</button>
+<button class="nav-link text-dark" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">关注</button>
 </li>
 <li class="nav-item" role="presentation">
-<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">漂流瓶</button>
+<button class="nav-link text-dark" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">漂流瓶</button>
 </li>
 </ul>
 <div class="tab-content" id="myTabContent">
 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 <!-- 主页内容   -->
+
 <nav class="navbar navbar-light bg-light">
 <div class="container-fluid justify-content-end">
-<button class="btn btn-outline-success me-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1">发帖</button>
-<button class="btn btn-outline-success g-recaptcha" type="button" id="refresh" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit2">刷新</button>
+<div class="btn-group" role="group" aria-label="Basic outlined example">
+<button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1">发帖</button>
+<button class="btn btn-outline-dark g-recaptcha" type="button" id="refresh" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit2">刷新</button>
+</div>
 </div>
 </nav>
+
 <div class="container" id="post-cards-container">
-<div class="post-card" data-post-id="${postid}">
+
 <div class="card w-100 rounded-0">
 <div class="card-body">
-<table width="75%">
-  <tbody>
-    <tr>
-      <td width="40%" nowrap>&nbsp;#${postid}</td>
-      <td nowrap class="text-muted">&nbsp;${time}</td>
-    </tr>
-  </tbody>
-</table>
-<p class="text text-break fs-5">${content}</p>
-<div class="text-muted">${reply}条评论&nbsp; &nbsp; &nbsp;最近评论时间：${replytime}</div>
+<p class="card-text text-break fs-5">欢迎来到Ecustspace!<br>Ecustspace旨在为大家提供一个自由、开放的平台，让你可以自由地分享想法、交流经验、寻求帮助。<br>
+  在这里，你可以匿名地发布各种话题，无需担心被别人认出来或者被歧视。<br>我们希望社区成为一个尊重他人、包容多元、友好交流的地方。因此，请遵守以下社区准则：
+<br>
+1.尊重他人：不得发表攻击性、歧视性或令人不适的言论<br>
+2.保护隐私：请不要透露他人的个人信息或隐私，包括你自己的个人信息。<br>
+3.不得发布违法信息：请不要发布任何违反法律法规的信息，包括但不限于涉及色情、暴力、诈骗等内容。</p>
 </div>
 </div>
-</div>
+
 </div>
 <div class="container mt-1">
 <button class="btn btn-light bg-white g-recaptcha w-100" type="button" id="formorepost" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit4">加载更多</button>	
@@ -637,7 +642,7 @@ function followpostcancel(token){
 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 <nav class="navbar navbar-light bg-light">
 <div class="container-fluid justify-content-end">
-<button class="btn btn-outline-success g-recaptcha me-2" type="button" id="refresh1" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit5">刷新</button>
+<button class="btn btn-outline-dark g-recaptcha me-2" type="button" id="refresh1" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit5">刷新</button>
 </div>
 </nav>
 	
@@ -646,16 +651,7 @@ function followpostcancel(token){
 <div class="col-sm-12 col-md-12">
 <div class="card w-100 rounded-0">
 <div class="card-body">
-<table width="75%">
-  <tbody>
-    <tr>
-      <td width="40%" nowrap>&nbsp;#457</td>
-      <td nowrap><img src="svg/72-icons-eleken/SVG/clock1.svg" alt="" width="20" height="20"/>&nbsp;</td>
-    </tr>
-  </tbody>
-</table>
-<h5 class="card-text">With supporting text below as a natural lead-in to additional content.</h5>
-<img src="svg/72-icons-eleken/SVG/message.svg" alt="" width="20" height="20"/>&nbsp;(455)
+<h5 class="card-text">请先登录</h5>
 </div>
 </div>
 </div>
@@ -693,7 +689,7 @@ function followpostcancel(token){
 
 </div>
 <div class="modal-footer">
-  <button type="submit" class="btn btn-primary g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit" id="denglu">登录
+  <button type="submit" class="btn btn-dark g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit" id="denglu">登录
 </button>
 </div>
 
@@ -715,7 +711,7 @@ function followpostcancel(token){
 
 </div>
 <div class="modal-footer">
- <button type="submit" class="btn btn-primary g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit1" id="postapost">发布
+ <button type="submit" class="btn btn-dark g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit1" id="postapost">发布
 </button>
 </div>
 </form>
@@ -736,7 +732,7 @@ function followpostcancel(token){
 
 </div>
 <div class="modal-footer">
- <button type="submit" class="btn btn-primary g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit3" id="postareply">发布
+ <button type="submit" class="btn btn-dark g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit3" id="postareply">发布
 </button>
 </div>
 </form>
@@ -755,6 +751,9 @@ function followpostcancel(token){
 		}
 		document.getElementById("replyrefresh").onclick=function(){
 			refreshreply()
+		}
+		document.getElementById("replyrefresh1").onclick=function(){
+			refreshreply1()
 		}
 	}
 	
