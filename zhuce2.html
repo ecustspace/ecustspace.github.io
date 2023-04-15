@@ -34,10 +34,8 @@
     });})
 	}
 	
-  
+  function onSubmit1(token){
   $(document).ready(function() {
-  $('#zhuce').click(function(event) {
-    event.preventDefault();
     var formData = $('#myform').serialize() + '&sessionid=' + sessionid; // 获取表单数据
     $.ajax({
       url: 'https://43.143.86.109/yanzhengma_in2.php',
@@ -55,8 +53,9 @@
         console.log(xhr,error);
       }
     });
-  });
 });
+grecaptcha.reset(1)
+}
 	
 	</script>
 	</head>
@@ -72,7 +71,7 @@
 <span class="input-group-text" id="basic-addon2">@mail.ecust.edu.cn</span>
 </div>
 
-	<div id="emailHelp" class="form-text">忘记密码再注册一遍就行了，新注册的账号会覆盖原来的账号</div>
+	<div id="emailHelp" class="form-text">忘记密码再注册一遍就行了</div>
 	</div>
 	<div class="mb-3">
 	<label for="exampleInputPassword1" class="form-label">Password</label>
@@ -81,11 +80,11 @@
 	</div>
 	<div class="mb-3">
 	<div class="row">
-	<label for="exampleInputPassword1" class="form-label ">验证码</label>
+	<label for="exampleInputPassword1" class="form-label">验证码</label>
 	<div class="col-6">
 	<input type="yanzhengma" class="form-control" id="yanzhengma" name="yanzhengma">
 	</div>
-	<div class="col-6"><button type="submit" class="btn btn-primary g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit" id="huoqu" >获取验证码</button></div>
+	<div class="col-6"><button type="submit" class="btn btn-dark g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit" id="huoqu" >获取验证码</button></div>
 	</div>
 	</div>
 	<div class="mb-3 form-check">
@@ -94,9 +93,9 @@
 	</div>
 	<div class="row">
 	<div class="col-6">
-	<button type="submit" class="btn btn-primary" id="zhuce">注册</button>
+	<button type="submit" class="btn btn-dark g-recaptcha" data-sitekey="6LdFP0AlAAAAAHCFWFdhftLrUsVIvK-ezlwVAlcS" data-callback="onSubmit1" id="zhuce" >&nbsp;注册&nbsp;</button>
 	</div>
-	<div class="col-6"><button type="button" class="btn btn-link">转到登录界面</button></div>
+	<div class="col-6"><button type="button" class="btn btn-link" onclick="window.location.href='/index.html'">转到登录界面</button></div>
 	</div>
 	</form>
 	</div>
