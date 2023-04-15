@@ -387,13 +387,14 @@ function onSubmit5(token){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
+	      document.getElementById("post-cards-container1").innerHTML=``
 	 toggleButton("refresh1", true);
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
 		if('posts1' in data2){
 			var posts = data2.posts1
-			document.getElementById("post-cards-container1").innerHTML=``
+			
 			$.each(posts, function(index, post) {
 				creatpostcard1(post.post_id,post.content,post.reply,post.post_time,post.last_reply_time)
 				
@@ -453,13 +454,13 @@ function refreshreply1(){
         withCredentials: true // 允许发送凭证信息
     },  
       success: function(response) {
-	
+	document.getElementById("reply1").innerHTML=``
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data2 = JSON.parse(response);
         if('alert' in data2){alert(data2.alert)}
 		if('replys' in data2){
 			var replys = data2.replys
-			document.getElementById("reply1").innerHTML=``
+			
 			$.each(replys, function(index, reply) {
 				creatcard1(reply.reply_id,reply.content,reply.time)
 				nowreplyid1 = reply.reply_id
