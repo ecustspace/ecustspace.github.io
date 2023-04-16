@@ -105,11 +105,6 @@ function creatpostcard1(postid,content,reply,time,replytime){
 
 	function onSubmit(token){
 	$(document).ready(function() {
-	var regex = /^[a-zA-Z0-9]{6,18}$/;	
-	var formData = new FormData(document.getElementById("myform"));
-	var email=formData.get("email");
-	var password=formData.get("password");// 获取表单数据
-	if(regex.test(email)&&regex.test(password)){
 		toggleButton("denglu", false);
 	formData = $('#myform').serialize() + '&tape=2';
 	document.getElementById("myform").reset();
@@ -154,8 +149,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
 		  toggleButton("denglu", true);
       }
     });
-	}
-	else{alert('email或password不符合格式');}
+	
 	grecaptcha.reset(6)
 	})
 	}
@@ -275,6 +269,7 @@ function onSubmit3(token){
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
 		$('#exampleModal2').modal('hide');
+	      
       },
       error: function(xhr, status, error) {
         console.log(xhr);
