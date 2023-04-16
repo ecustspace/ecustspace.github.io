@@ -14,6 +14,12 @@
     overflow: hidden;
     -webkit-line-clamp: 5;
   }
+:root {
+      --bs-font-size-base: 1rem;
+    }
+    .custom-fs-5 {
+      font-size: calc(1.12 * var(--bs-font-size-base));
+    }
 </style>
 <script>
 var id
@@ -33,7 +39,7 @@ function creatcard(floor,content,time){
     <p class="floor">${floor}楼</p>
   </div>
   <div class="reply-content">
-    <p class="text text-break fs-6">${content}</p>
+    <p class="text text-break fs-5">${content}</p>
     <p class="reply-date text-muted">${time}</p>
   </div>
 	<hr> <!-- 加上横线 -->
@@ -49,7 +55,7 @@ function creatcard1(floor,content,time){
     <p class="floor">${floor}楼</p>
   </div>
   <div class="reply-content">
-    <p class="text text-break fs-6">${content}</p>
+    <p class="text text-break fs-5">${content}</p>
     <p class="reply-date text-muted">${time}</p>
   </div>
 	<hr> <!-- 加上横线 -->
@@ -71,7 +77,7 @@ function creatpostcard(postid,content,reply,time){
     </tr>
   </tbody>
 </table>
-<p class="text text-break fs-6">${content}</p>
+<p class="text text-break fs-5">${content}</p>
 <div class="text-muted">${reply}条评论</div>
 </div>
 </div>
