@@ -120,7 +120,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
 	      
 		  toggleButton("denglu", true);
 		response = JSON.stringify(response);  
-	response = response.replace(/^\ufeff/g, '');
+	
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
 		if('token' in data){mytoken = data.token}
