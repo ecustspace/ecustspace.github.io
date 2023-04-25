@@ -119,7 +119,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
       success: function(response) {
 	      
 		  toggleButton("denglu", true);
-		response = JSON.stringify(response);  
+		  
   response = response.replace(/^\ufeff/g, '');	
   var data = JSON.parse(response);
 console.log(data);
