@@ -120,9 +120,8 @@ function creatpostcard1(postid,content,reply,time,replytime){
 	      
 		  toggleButton("denglu", true);
 		  
-	response = response.replace(/^\ufeff/g, '');
-	console.log(response)// 去除 BOM 字符
-  var data = JSON.parse(response);
+	a = response.replace(/^\ufeff/g, '');
+  var data = JSON.parse(a);
         if('alert' in data){alert(data.alert)}
 		if('token' in data){mytoken = data.token}
 		if('id' in data){id = data.id}
