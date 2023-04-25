@@ -117,7 +117,7 @@ function creatpostcard1(postid,content,reply,time,replytime){
     },  
 	
       success: function(response) {
-	      
+	      console.log(typeof response);
 		  toggleButton("denglu", true);
 		  
   response = response.replace(/^\ufeff/g, '');	
