@@ -170,7 +170,7 @@ function onSubmit1(token){
     },  
       success: function(response) {
 	toggleButton("postapost", true);
-	 
+	response = response.replace(/^\ufeff/g, '');
 	response = response.replace(/^\ufeff/g, ''); // 去除 BOM 字符
   var data = JSON.parse(response);
         if('alert' in data){alert(data.alert)}
